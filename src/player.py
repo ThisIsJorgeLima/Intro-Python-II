@@ -3,10 +3,7 @@
 
 
 class Player():
-    ''' A player class with name and current room '''
-
     def __init__(self, name, current_room):
-        ''' Constructor'''
 
         self.name = name
         self.current_room = current_room
