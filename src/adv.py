@@ -1,6 +1,6 @@
 # name: Jorge Lima
 # date: 2020-05-06
-# description: Adventure Game
+# description: Ward-Perkins and the search of The Lost Amber Room
 
 """
 Import Statements:
@@ -8,56 +8,21 @@ Import Statements:
 import random
 import time
 from room import Room
+from player import Player
 
 
 def displayIntro():
-    print("An archaeologist Indy sets out to rescue his father, ")
-    print("a medievalist who vansihed while in search of the Holy Grail")
-    print("you have to follow clues from his father's journal")
-    print("which was left behind.")
-    print("you come to crossroads on your trip, leading to several paths.")
-    print("One of the paths leads you to the hidden treasure!")
-    print("and the other leads may lead you to the kidnappers ")
-    print("You've lost the journal!")
-
-# def choosePath():
-#     path = ""
-#     while path != "1" and path != "2":  # input validation
-#         path = input("Which path will you choose? (1 or 2): ")
-#
-#     return path
-#
-#
-# def checkPath(chosenPath):
-#     print("You head down the path")
-#     time.sleep(2)
-#     print("there's an asteroid nearby that looks familar, that must be a good sign...")
-#     print("But your skin begins to tingle...")
-#     time.sleep(2)
-#
-#     correctPath = random.randint(1, 2)
-#
-#     if chosenPath == str(correctPath):
-#         print("That tingling was just the feeling of admiration from")
-#         print("the citizens of the galaxy!")
-#         print("Welcome home!")
-#     else:
-#         print("Ax extremely enegetic burst of gamma rays pass through you")
-#         print("casuing all of the atoms in your body to dissociate")
-#         print("there is no record left to tingle...")
-#         print()
-#         # time.sleep()
-#
-#
-# playAgain = "yes"
-# while playAgain == "yes" or playAgain == "y":
-#     displayIntro()
-#     choice = choosePath()
-#     checkPath(choice)  # choic is equal to "1" or "2"
-#     playAgain = input("Do you want to play again? (yes or y to continue  playing): ")
-
+    print("An archaeologist, Ward-Perkins, sets out to rescue his father, ")
+    print("an artist who vanished while in search of THE AMBER ROOM,")
+    print("you have to follow clues from his father's journal, which was left behind. ")
+    print("You come to crossroads on your trip to Saing Petersburg,")
+    print("leading to several paths.")
+    print("One of the paths leads you to the hidden treasure,")
+    print("it was sometimes called the Eighth Wonder of the World.")
+    print("And the other leads may lead you to the kidnappers... ")
 
 # Declare all the rooms
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -94,13 +59,17 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
+print('Ward-Perkins and the search of The Lost Amber Room')
 name = input("Enter Player Name: ")
+player = Player(name=name, current_room=room['outside'])
 # if player doesn't add a name, user Player 1:
 if name == "":
     name = "Ready Player One"
 
 print(f'Welcome, {name}!')
 
+displayIntro()
 # Write a loop that:
 #
 # * Prints the current room name
@@ -113,15 +82,44 @@ print(f'Welcome, {name}!')
 # If the user enters "q", quit the game.
 
 
-def choosePath():
-    path = ""
-    while path != "q":  # input validation
-        path = input("Which path will you choose? ('n', 's', 'e', 'w'): ")
-        commands = ['n', 's', 'e', 'w', 'i', 'Item'',Quit', 'q', ]
-     # return path
-     #
-     #    print(f"\n You are currently in {player.room()}\n"}
-     #    move = input("\nChoose your destination, {player.who}?".lower())
-     #    if move == 'q':
-     #        print("The treasure awaits. Play again soon!")
-     #        exit()
+# def choosePath():
+#     path = ""
+#     while path != "q":  # input validation
+#         path = input("Which path will you choose? ('n', 's', 'e', 'w'): ")
+#         commands = ['n', 's', 'e', 'w', 'i', 'Item'',Quit', 'q', ]
+#
+#     print(f"""Welcome {player.name}! You find yourself at the {room['outside'].name}.
+# {room['outside'].description}""")
+#
+
+while True:
+
+    selection = input(
+        """
+Please select a direction to advance:
+n, s, e, w, q
+--> """
+    )
+
+    if selection == 'q':
+        print(f'Uh oh! Youve been kidnapped, {player.name}!')
+        break
+
+    try:
+        """ Cast input as a string"""
+        selection = str(selection)
+
+        # print(player.current_room.__dict__)
+
+        if selection in ('n', 's', 'e', 'w'):
+            if f'{selection}_to' in player.current_room.__dict__:
+                player.current_room = getattr(player.current_room, f'{selection}_to')
+                print(f'\nYou find yourself at the {player.current_room}')
+            else:
+                print("\nThat isn't a valid input; Please select from above!")
+
+        else:
+            print("\nThat isn't a valid input; Please select from above!")
+
+    except TypeError:
+        print('Please reenter one of these alternatives: n, s, e, w, q')

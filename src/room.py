@@ -3,16 +3,11 @@
 
 
 class Room():
-    """
-    This defines the room class.
-    Input: loc = name of the room
-    description = infor about the location
-    """
+    ''' A room class that a player can interact with'''
 
-    def __init__(self, room_name, description, items=None):
-        self.room_name = room_name
+    def __init__(self, name, description):
+        self.name = name
         self.description = description
-        self.n_to = None
-        self.s_to = None
-        self.e_to = None
-        self.w_to = None
+
+    def __str__(self):
+        return f'{self.name}.\n{self.description}'
