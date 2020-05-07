@@ -15,7 +15,7 @@ def displayIntro():
     print("An archaeologist, Ward-Perkins, sets out to rescue his father, ")
     print("an artist who vanished while in search of THE AMBER ROOM,")
     print("you have to follow clues from his father's journal, which was left behind. ")
-    print("You come to crossroads on your trip to Saing Petersburg,")
+    print("You come to crossroads on your trip to Saint Petersburg,")
     print("leading to several paths.")
     print("One of the paths leads you to the hidden treasure,")
     print("it was sometimes called the Eighth Wonder of the World.")
