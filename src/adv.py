@@ -116,10 +116,10 @@ n, s, e, w, q
                 player.current_room = getattr(player.current_room, f'{selection}_to')
                 print(f'\nYou find yourself at the {player.current_room}')
             else:
-                print("\nThat isn't a valid input; Please select from above!")
+                print("\nThat isn't a valid input; Please select the following:")
 
         else:
-            print("\nThat isn't a valid input; Please select from above!")
+            print("\nThat isn't a valid input; Please select the following:")
 
     except TypeError:
         print('Please reenter one of these alternatives: n, s, e, w, q')
