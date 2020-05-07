@@ -5,10 +5,9 @@
 """
 Import Statements:
 """
-import random
-import time
 from room import Room
 from player import Player
+from item import Item
 
 
 def displayIntro():
@@ -20,6 +19,18 @@ def displayIntro():
     print("One of the paths leads you to the hidden treasure,")
     print("it was sometimes called the Eighth Wonder of the World.")
     print("And the other leads may lead you to the kidnappers... ")
+
+
+# Declare items
+items = {
+    'journal': Item("journal",
+                    """A notebook containing a series of maps and renders of THE AMBER RROM
+    documented by a Dr. Perkins."""),
+
+    'bullwhip': Item("bullwhip",
+                     """No. 455 10 ft. Bull Whip.""")
+}
+
 
 # Declare all the rooms
 
