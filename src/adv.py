@@ -1,5 +1,5 @@
 # name: Jorge Lima
-# date: 2020-05-06
+# date: 2020-05-07
 # description: Ward-Perkins and the search of The Lost Amber Room
 
 """
@@ -8,6 +8,14 @@ Import Statements:
 from room import Room
 from player import Player
 from item import Item
+
+# Utility func clears screen for graphics
+# include <windows.h>
+# include <linux + Mac>
+from utils import clear_terminal
+
+
+# Display intro
 
 
 def displayIntro():
@@ -22,19 +30,18 @@ def displayIntro():
 
 
 # Declare items
-items = {
-    'journal': Item("journal",
+item = {
+    'journal': Item("Journal",
                     """A notebook containing a series of maps and renders of THE AMBER RROM
     documented by a Dr. Perkins."""),
 
-    'bullwhip': Item("bullwhip",
-                     """No. 455 10 ft. Bull Whip.""")
+    'bullwhip': Item("Bullwhip",
+                     """No. 455 10 ft. Bull Whip."""),
+    'flame torch': Item("Flame Torch", """Wrapped in cloth around the end of a stick""")
 }
 
 
 # Declare all the rooms
-
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -68,10 +75,30 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+# Make a new player object that is currently in the 'outside' room.
+# Clears screen for opening logo for the game:
+clear_terminal()
+
+print("""
+
+████████╗██╗░░██╗███████╗  ██╗░░░░░░█████╗░░██████╗████████╗
+╚══██╔══╝██║░░██║██╔════╝  ██║░░░░░██╔══██╗██╔════╝╚══██╔══╝
+░░░██║░░░███████║█████╗░░  ██║░░░░░██║░░██║╚█████╗░░░░██║░░░
+░░░██║░░░██╔══██║██╔══╝░░  ██║░░░░░██║░░██║░╚═══██╗░░░██║░░░
+░░░██║░░░██║░░██║███████╗  ███████╗╚█████╔╝██████╔╝░░░██║░░░
+░░░╚═╝░░░╚═╝░░╚═╝╚══════╝  ╚══════╝░╚════╝░╚═════╝░░░░╚═╝░░░
+
+░█████╗░███╗░░░███╗██████╗░███████╗██████╗░  ██████╗░░█████╗░░█████╗░███╗░░░███╗
+██╔══██╗████╗░████║██╔══██╗██╔════╝██╔══██╗  ██╔══██╗██╔══██╗██╔══██╗████╗░████║
+███████║██╔████╔██║██████╦╝█████╗░░██████╔╝  ██████╔╝██║░░██║██║░░██║██╔████╔██║
+██╔══██║██║╚██╔╝██║██╔══██╗██╔══╝░░██╔══██╗  ██╔══██╗██║░░██║██║░░██║██║╚██╔╝██║
+██║░░██║██║░╚═╝░██║██████╦╝███████╗██║░░██║  ██║░░██║╚█████╔╝╚█████╔╝██║░╚═╝░██║
+╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═════╝░╚══════╝╚═╝░░╚═╝  ╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░░░░╚═╝
+
+                           𝗖𝗢𝗣𝗬𝗥𝗜𝗚𝗛𝗧 𝟮𝟬𝟮𝟬 𝗝𝗥𝗚𝗟.𝗜𝗠 """
+      )
 
 # Make a new player object that is currently in the 'outside' room.
-
-print('Ward-Perkins and the search of The Lost Amber Room')
 name = input("Enter Player Name: ")
 player = Player(name=name, current_room=room['outside'])
 # if player doesn't add a name, user Player 1:
@@ -80,57 +107,83 @@ if name == "":
 
 print(f'Welcome, {name}!')
 
-displayIntro()
+# displayIntro()
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
 
+location = f"""\nYou find yourself at the {player.current_room}
+There is {player.current_room.items_in_room()} on the ground."""
+# Make a new player object that is currently in the 'outside' room.
 
-# def choosePath():
-#     path = ""
-#     while path != "q":  # input validation
-#         path = input("Which path will you choose? ('n', 's', 'e', 'w'): ")
-#         commands = ['n', 's', 'e', 'w', 'i', 'Item'',Quit', 'q', ]
-#
-#     print(f"""Welcome {player.name}! You find yourself at the {room['outside'].name}.
-# {room['outside'].description}""")
-#
+# clear_terminal()
+displayIntro()
+print(f'Welcome, {name}!')
+
+# Welcoming Player
+print(
+    f"""Welcome, {player.name}! You find yourself at the {player.current_room}"""
+)
 
 while True:
 
     selection = input(
         """
-Please select a direction to advance:
-n, s, e, w, q
+Please select a passage, course of action, or select item from your inventory:
+North (n), South (s), East (e), West (w), Quit (q)
+Select item (take [name]) Drop item(drop [name])
+View Inventory(i)
 --> """
     )
 
     if selection == 'q':
-        print(f'Uh oh! Youve been kidnapped, {player.name}!')
+        clear_terminal()
+        print(f' 𝐔𝐡 𝐨𝐡❗ 𝐘𝐨𝐮𝐯𝐞 𝐛𝐞𝐞𝐧 𝐤𝐢𝐝𝐧𝐚𝐩𝐩𝐞𝐝, {player.name}❗')
         break
+    selection = selection.strip().split()
+    if selection[0] in ('n', 's', 'e', 'w', 'q'):
+        clear_terminal()
 
-    try:
-        """ Cast input as a string"""
-        selection = str(selection)
+        if hasattr(player.current_room, f'{selection[0]}_to'):
+            player.current_room = getattr(player.current_room, f'{selection[0]}_to')
+            print(player)
 
-        # print(player.current_room.__dict__)
+    elif selection[0] in ('take'):
+        clear_terminal()
+        for item in player.current_room.inventory:
+            if selection[1] in item.name:
+                player.add_item(item)
+                player.current_room.remove_item(item)
+                print(f"""You find yourself at the {player.current_room}
+There is {player.current_room.items_in_room()} on the ground.""")
 
-        if selection in ('n', 's', 'e', 'w'):
-            if f'{selection}_to' in player.current_room.__dict__:
-                player.current_room = getattr(player.current_room, f'{selection}_to')
-                print(f'\nYou find yourself at the {player.current_room}')
             else:
-                print("\nThat isn't a valid input; Please select the following:")
+                print(f'\n{selection[1]} not in room.')
+                print(f"""You find yourself at the {player.current_room}
+There is {player.current_room.items_in_room()} on the ground.""")
 
-        else:
-            print("\nThat isn't a valid input; Please select the following:")
+    elif selection[0] in ('drop', 'd'):
+        clear_terminal()
+        for item in player.inventory:
+            if selection[1] in item.name:
+                player.drop_item(item)
+                player.current_room.add_item(item)
+                print(f"""You find yourself at the {player.current_room}
+There is {player.current_room.items_in_room()} on the ground.""")
 
-    except TypeError:
-        print('Please reenter one of these alternatives: n, s, e, w, q')
+            else:
+                clear_terminal()
+                print(f'\n{selection[1]} not in inventory')
+                print(f"""You find yourself at the {player.current_room}
+There is {player.current_room.items_in_room()} on the ground.""")
+
+    elif selection[0] in ('i', 'inventory'):
+        clear_terminal()
+        print(f"\n{player.name}'s inventory:\n{player.items_in_inventory()}")
+
+    else:
+        clear_terminal()
+        print(f"""That is not a valid command\n
+You find yourself at the {player.current_room}
+There is {player.current_room.items_in_room()} on the ground.""")
